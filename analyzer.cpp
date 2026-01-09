@@ -70,19 +70,16 @@ int TripAnalyzer::parseHour(const string& dateTime)
         }
     }
 
-    //hata cükmasin diye kontrol yeri
     if (spaceIndex == -1 || spaceIndex + 2 >= length) {
         return -1;
     }
 
-   //stringi oluşturmak için var
     string hourStr = "";
-    hourStr += dateTime[spaceIndex + 1]; // Boşluktan sonraki ilk
-    hourStr += dateTime[spaceIndex + 2]; // Boşluktan sonraki ikinci
+    hourStr += dateTime[spaceIndex + 1]; 
+    hourStr += dateTime[spaceIndex + 2]; 
 
     int hour = safeStringToInt(hourStr);
     
-    // saat hata vermesin diye 24 olmaz olayı
     if (hour < 0 || hour > 23) {
         return -1;
     }
@@ -283,8 +280,7 @@ vector<SlotCount> TripAnalyzer::topBusySlots(int k) const {
         string zone = "";
         string hourStr = "";
         bool pipeFound = false;
-        int s=key.length();
-        for (size_t i = 0; i < s; i++) {
+        for (size_t i = 0; i < key.length(); i++) {
             if (key[i] == '|') {
                 pipeFound = true;
                 continue; 
