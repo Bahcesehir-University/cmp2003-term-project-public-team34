@@ -87,7 +87,11 @@ int TripAnalyzer::parseHour(const string& dateTime)
     return hour;
 }
 
-
+string TripAnalyzer::makeSlotKey(const string& zone, int hour) const {
+    string hourStr = intToString(hour);
+    // KADIKOY | 14 gibi göstersin diye var
+    return zone + "|" + hourStr;
+}
 
 void TripAnalyzer::ingestFile(const string& csvPath) {
     ifstream file(csvPath);
