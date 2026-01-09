@@ -57,11 +57,12 @@ string TripAnalyzer::intToString(int number) const {
     return result;
 }
 
-int TripAnalyzer::parseHour(const string& dateTime) {
-    int length = dateTime.length(); 
+int TripAnalyzer::parseHour(const string& dateTime) 
+{
     int spaceIndex = -1;
-    int colonIndex = -1;
+    int length = dateTime.length(); 
 
+    //Sequential Search yaptık
     for (int i = 0; i < length; i++) {
         if (dateTime[i] == ' ') {
             spaceIndex = i;
@@ -69,35 +70,24 @@ int TripAnalyzer::parseHour(const string& dateTime) {
         }
     }
 
-    if (spaceIndex == -1) return -1;
-
-    for (int i = spaceIndex + 1; i < length; i++) {
-        if (dateTime[i] == ':') {
-            colonIndex = i;
-            break;
-        }
+    //hata cükmasin diye kontrol yeri
+    if (spaceIndex == -1 || spaceIndex + 2 >= length) {
+        return -1;
     }
 
-    if (colonIndex == -1) return -1;
-
+   //stringi oluşturmak için var
     string hourStr = "";
-    for (int i = spaceIndex + 1; i < colonIndex; i++) {
-        hourStr += dateTime[i];
-    }
+    hourStr += dateTime[spaceIndex + 1]; // Boşluktan sonraki ilk
+    hourStr += dateTime[spaceIndex + 2]; // Boşluktan sonraki ikinci
 
     int hour = safeStringToInt(hourStr);
     
+    // saat hata vermesin diye 24 olmaz olayı
     if (hour < 0 || hour > 23) {
         return -1;
     }
     
     return hour;
-}
-
-string TripAnalyzer::makeSlotKey(const string& zone, int hour) const {
-    string hourStr = intToString(hour);
-    // KADIKOY | 14 gibi göstersin diye
-    return zone + "|" + hourStr;
 }
 
 
